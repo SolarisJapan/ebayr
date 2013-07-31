@@ -81,7 +81,7 @@ module Ebayr #:nodoc:
       args.map do |structure|
         case structure
           when Hash then structure.map do |k, v| 
-            if v.kind_of?(Array) && !v[0].kind_of?(Hash)
+            if v.kind_of?(Array)
               v.collect { |s| "<#{k.to_s}>#{xml(s)}</#{k.to_s}>" }.join
             else
               "<#{k.to_s}>#{xml(v)}</#{k.to_s}>"

@@ -34,7 +34,7 @@ module Ebayr
       expected = '<a>b</a><a>c</a>'
       assert_equal expected, Request.xml(:a => ["b", "c"])
     end
-
+    
     def test_xml_of_a_string
       assert_equal 'boo', Request.xml('boo')
     end
@@ -44,7 +44,7 @@ module Ebayr
     end
 
     def test_xml_of_multiple_arguments
-      assert_equal '<a>1</a><a><b>1</b><b>2</b></a>',
+      assert_equal '<a>1</a><a><b>1</b></a><a><b>2</b></a>',
         Request.xml({ :a => 1 }, { :a => [{:b => 1 }, { :b => 2 }] })
     end
   end
