@@ -29,6 +29,11 @@ module Ebayr
       expected = '<a>1</a><a>2</a>'
       assert_equal expected, Request.xml([{ :a => 1 }, { :a => 2 }])
     end
+    
+    def test_xml_of_a_array_included_in_a_hash
+      expected = '<a>b</a><a>c</a>'
+      assert_equal expected, Request.xml(:a => ["b", "c"])
+    end
 
     def test_xml_of_a_string
       assert_equal 'boo', Request.xml('boo')

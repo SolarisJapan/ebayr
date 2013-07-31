@@ -76,11 +76,17 @@ module Ebayr #:nodoc:
     #
     #     Ebayr.xml("Hello!")       # => "Hello!"
     #     Ebayr.xml(:foo=>"Bar")  # => <foo>Bar</foo>
-    #     Ebayr.xml(:foo=>["Bar","Baz"])  # => <foo>Bar</foo>
+    #     Ebayr.xml(:foo=>["Bar","Baz"])  # => <foo>Bar</foo><foo>Baz</foo>
     def self.xml(*args)
       args.map do |structure|
         case structure
-          when Hash then structure.map { |k, v| "<#{k.to_s}>#{xml(v)}</#{k.to_s}>" }.join
+          when Hash then structure.map do |k, v| 
+            if v.kind_of?(Array) && !v[0].kind_of?(Hash)
+              v.collect { |s| "<#{k.to_s}>#{xml(s)}</#{k.to_s}>" }.join
+            else
+              "<#{k.to_s}>#{xml(v)}</#{k.to_s}>"
+            end
+          end.join
           when Array then structure.map { |v| xml(v) }.join
           else structure.to_s
         end
